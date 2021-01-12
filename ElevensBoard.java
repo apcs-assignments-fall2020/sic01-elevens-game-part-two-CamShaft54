@@ -51,8 +51,7 @@ public class ElevensBoard extends Board {
      */
     @Override
     public boolean isLegal(List<Integer> selectedCards) {
-        // YOUR CODE HERE
-        return false;
+        return containsPairSum11(selectedCards) || containsJQK(selectedCards);
     }
 
     /**
@@ -68,9 +67,7 @@ public class ElevensBoard extends Board {
         // selectedCards is a list of the indexes of
         // all cards on the board
         List<Integer> selectedCards = cardIndexes();
-
-        // YOUR CODE HERE
-        return true;
+        return containsPairSum11(selectedCards) || containsJQK(selectedCards);
     }
 
     /**
@@ -82,8 +79,14 @@ public class ElevensBoard extends Board {
      *         otherwise.
      */
     private boolean containsPairSum11(List<Integer> selectedCards) {
-        // YOUR CODE HERE
-        return false;
+      for (int i = 0; i < selectedCards.size(); i++) {
+        for (int j = 0; j < selectedCards.size(); j++) {
+          if (j != i && selectedCards.get(j) + selectedCards.get(i) == 11) {
+            return false;
+          }
+        }
+      }
+      return true;
     }
 
     /**
@@ -95,7 +98,21 @@ public class ElevensBoard extends Board {
      *         and a king; false otherwise.
      */
     private boolean containsJQK(List<Integer> selectedCards) {
-        // YOUR CODE HERE
-        return false;
+        // return selectedCards.contains(10) && selectedCards.contains(11) && selectedCards.contains(12);
+        boolean containsJack = false;
+        boolean containsQueen = false;
+        boolean containsKing = false;
+
+        for (int i = 0; i < selectedCards.size(); i++) {
+          String currentCard = this.cardAt(selectedCards.get(i)).getRank();
+          if (currentCard.equals("jack")) {
+            containsJack = true;
+          } else if (currentCard.equals("queen")) {
+            containsQueen = true;
+          } else if (currentCard.equals("king")) {
+            containsKing = true;
+          }
+        }
+        return containsJack && containsQueen && containsKing;
     }
 }
