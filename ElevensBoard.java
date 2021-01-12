@@ -30,7 +30,7 @@ public class ElevensBoard extends Board {
     /**
      * Flag used to control debugging print statements.
      */
-    private static final boolean I_AM_DEBUGGING = false;
+    private static final boolean I_AM_DEBUGGING = true;
 
     /**
      * Creates a new <code>ElevensBoard</code> instance.
@@ -79,14 +79,15 @@ public class ElevensBoard extends Board {
      *         otherwise.
      */
     private boolean containsPairSum11(List<Integer> selectedCards) {
+      boolean hasPair = false;
       for (int i = 0; i < selectedCards.size(); i++) {
         for (int j = 0; j < selectedCards.size(); j++) {
-          if (j != i && selectedCards.get(j) + selectedCards.get(i) == 11) {
-            return false;
+          if (j != i && cardAt(selectedCards.get(j)).getPointValue() + cardAt(selectedCards.get(i)).getPointValue() == 11) {
+            hasPair = true;
           }
         }
       }
-      return true;
+      return hasPair;
     }
 
     /**
@@ -104,7 +105,8 @@ public class ElevensBoard extends Board {
         boolean containsKing = false;
 
         for (int i = 0; i < selectedCards.size(); i++) {
-          String currentCard = this.cardAt(selectedCards.get(i)).getRank();
+          String currentCard = cardAt(selectedCards.get(i)).getRank();
+          System.out.println(currentCard);
           if (currentCard.equals("jack")) {
             containsJack = true;
           } else if (currentCard.equals("queen")) {
